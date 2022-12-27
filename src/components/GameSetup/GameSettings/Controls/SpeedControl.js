@@ -18,11 +18,11 @@ export const SpeedControl = (props) => {
     return (
       <div className='speedControl'>
         <button disabled id='increaseSpeed' onClick={increaseSpeed}>
-          Up Speed
+          Збільшити швидкість
         </button>
         <div>{settings.speedValue}</div>
         <button disabled id='decreaseSpeed' onClick={decreaseSpeed}>
-          Down Speed
+          Зменшити швидкість
         </button>
       </div>
     );
@@ -30,11 +30,11 @@ export const SpeedControl = (props) => {
     return (
       <div className='speedControl'>
         <button id='increaseSpeed' onClick={increaseSpeed}>
-          Up Speed
+        Збільшити швидкість
         </button>
         <div>{settings.speedValue}</div>
         <button id='decreaseSpeed' onClick={decreaseSpeed}>
-          Down Speed
+        Зменшити швидкість
         </button>
       </div>
     );
@@ -42,11 +42,11 @@ export const SpeedControl = (props) => {
     return (
       <div className='speedControl'>
         <button disabled id='increaseSpeed' onClick={increaseSpeed}>
-          Up Speed
+         Збільшити швидкість
         </button>
         <div>{settings.speedValue}</div>
         <button disabled id='decreaseSpeed' onClick={decreaseSpeed}>
-          Down Speed
+        Зменшити швидкість
         </button>
       </div>
     );

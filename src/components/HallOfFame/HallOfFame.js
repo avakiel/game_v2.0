@@ -11,7 +11,9 @@ export const HallOfFame = (props) => {
             <p>
                 The Hall Of Fame
             </p>
-            <textarea id='hallOfFame' className='playerBoard'></textarea>
+            <div id='hallOfFame' className='playerBoard'><ul>{selectFame.map(item=><li>{item.name + '   ' + item.score}</li>)}
+            </ul>
+            </div>
         </div>
     )
 }

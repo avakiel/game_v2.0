@@ -1,16 +1,16 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { pushTablet } from '../../Store/FameReducer';
-import { refreshCount, selectGameState, setEndRandomLight, setFalseCount, setFlashRandom, setGameReady, setStartRandomLight } from '../../Store/GameReducer';
-import { pushPlayer, selectPlayers } from '../../Store/PlayersReducer';
-import { selectScore, setScore } from '../../Store/ScoreReducer';
+import { pushTablet, selectTablet } from '../../Store/FameReducer';
+import { playerTurn, refreshCount, selectGameState, setEndRandomLight, setFalseCount, setFlashRandom, setGameReady, setPlayerTurn, setStartRandomLight } from '../../Store/GameReducer';
+import { pushPlayer, refreshPlayer, selectPlayers } from '../../Store/PlayersReducer';
+import { refreshScore, selectScore, setScore } from '../../Store/ScoreReducer';
 import { confirmSettings, selectSettings } from '../../Store/SettingsReducer';
 
 
 
 function GameBoard(props) {
-
+  let tablet = useSelector(selectTablet)
   let gameState = useSelector(selectGameState)
   let gameSettings = useSelector(selectSettings)
   let score = useSelector(selectScore)
@@ -27,6 +27,7 @@ function GameBoard(props) {
 
 
   function startGame() {
+    dispatch(setStartRandomLight(false))
     dispatch(setGameReady(true))
     setHideClass('hide')
     dispatch(setStartRandomLight(true))
@@ -73,66 +74,86 @@ function GameBoard(props) {
     }
     dispatch(setEndRandomLight(true))
     dispatch(setStartRandomLight(false))
+    dispatch(setPlayerTurn(true))
   }
 
-  
+  function totalEnd() {
+    document.querySelectorAll('.flashItem').forEach(item => item.style.backgroundColor = '')
+    alert('game over')
+
+    dispatch(pushTablet({
+      name: players[players.length - 1].name,
+      score: score
+    }))
+    dispatch(refreshScore())
+    dispatch(refreshPlayer())
+    dispatch(setGameReady(false))
+    console.log(tablet)
+  }
 
 
-  function gameEnd () {
-    document.querySelectorAll('.flashItem').forEach(item=>item.style.backgroundColor='')
+  function gameEnd() {
+    document.querySelectorAll('.flashItem').forEach(item => item.style.backgroundColor = '')
     dispatch(setGameReady(false))
     setHideClass('')
+    dispatch(setStartRandomLight(false))
     dispatch(setEndRandomLight(false))
   }
-  
+
 
 
   let randomArr = gameState.flashRandom
   let playerCheck = []
-  let [count, setCount] = useState(0)
-  let [falseCount, setFalseCount] = useState(0)
+  let count = 0
+  let wrong = 0
 
 
-  
-  
-if (falseCount === 5) {
-  dispatch(pushTablet({
-    name:players[players.length-1].name,
-    score:score
-  }))
-  dispatch(setGameReady(false))
-    setHideClass('')
-    dispatch(setStartRandomLight(false))
-    dispatch(setEndRandomLight(false))
-    dispatch(confirmSettings(false))
+
+  if (gameState.falseCount >= 5) {
+    setHideClass('hide')
     dispatch(refreshCount())
-}
-
-  function itemCheck(event) {
-
-    playerCheck.push(Number(event.target.id))
-    if (Number(event.target.id) === randomArr[count]) {
-      event.target.style.backgroundColor = 'green'
-      setCount(count+1)
-    } else {
-      setCount(count+1)
-      event.target.style.backgroundColor = 'red'
-     setFalseCount(falseCount+1)
-    }
-    if (playerCheck.length === randomArr.length && playerCheck.length !== 0) {
-      dispatch(setScore((playerCheck.length-falseCount) * 35))
-      setTimeout(gameEnd,1000)
-     }
+    totalEnd()
+    dispatch(setPlayerTurn(false))
+    playerCheck = []
+    count = 0
+    dispatch(confirmSettings(false))
   }
 
 
 
 
 
-  if ((gameState.startRandomLight === true && gameState.endRandomLight === false) || (gameState.startRandomLight === false && gameState.endRandomLight === false)) {
+  function itemCheck(event) {
+    if (gameState.playerTurn === true) {
+      playerCheck.push(Number(event.target.id))
+      if (Number(event.target.id) === randomArr[count]) {
+        event.target.style.backgroundColor = 'green'
+        count++
+      } else if (Number(event.target.id) !== randomArr[count]) {
+        count++
+        wrong++
+        event.target.style.backgroundColor = 'red'
+      }
+      if (playerCheck.length === randomArr.length) {
+        dispatch(setFalseCount(wrong))
+        dispatch(setPlayerTurn(false))
+        dispatch(setScore(count - wrong > 0 ? (count - wrong) * 35 : 0))
+        count = 0
+        playerCheck = []
+        setTimeout(gameEnd, 1000)
+      }
+
+    }
+  }
+
+
+
+
+
+  if (gameState.startRandomLight === false && gameState.endRandomLight === false) {
     return (
       <>
-        <button className={hideClass} id="startButton" onClick={startGame}>LET'S START THIS!</button>
+        <button className={hideClass} id="startButton" onClick={startGame}>Почати гру!</button>
         <div className='gameItem'>
           <div id='1' className="flashItem"></div>
           <div id='2' className="flashItem"></div>
@@ -141,10 +162,10 @@ if (falseCount === 5) {
         </div>
       </>
     );
-  } else if (gameState.startRandomLight === false && gameState.endRandomLight === true) {
+  } else if (gameState.endRandomLight === true) {
     return (
       <>
-        <button className={hideClass} id="startButton" onClick={startGame}>LET'S START THIS!</button>
+        <button className={hideClass} id="startButton" onClick={startGame}>Почати гру!</button>
         <div className='gameItem'>
           <div id='1' className="flashItem" onClick={itemCheck}></div>
           <div id='2' className="flashItem" onClick={itemCheck}></div>

@@ -8,12 +8,15 @@ export const scoreReducer = createSlice({
     reducers: {
         setScore: (state,data) => {
             state.gameScore += data.payload
+        },
+        refreshScore: (state) => {
+            state.gameScore = 0
         }
     }
 })
 
 
-export const {setScore} = scoreReducer.actions
+export const {setScore, refreshScore} = scoreReducer.actions
 export const selectScore = state => state.score.gameScore
 
 export default scoreReducer.reducer

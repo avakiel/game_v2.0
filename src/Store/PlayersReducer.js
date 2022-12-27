@@ -13,11 +13,14 @@ export const playersReducer = createSlice({
                 ReadySettings: true
             }
         ]}
+        },
+        refreshPlayer: (state) => {
+            state.allPlayers = []
         }
     }
 })
 
-export const {pushPlayer} = playersReducer.actions
+export const {pushPlayer, refreshPlayer} = playersReducer.actions
 
 export const selectPlayers = state => state.players.allPlayers
 

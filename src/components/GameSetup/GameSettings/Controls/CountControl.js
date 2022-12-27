@@ -19,11 +19,11 @@ export const CountControl = (props) => {
     return (
       <div className='countControl'>
         <button disabled id='increaseCount' onClick={increaseCount}>
-          Up Count
+          Збільшити кількість
         </button>
         <div>{settings.countValue}</div>
         <button disabled id='decreaseCount' onClick={decreaseCount}>
-          Down Count
+          Зменшити кількість
         </button>
       </div>
     );
@@ -31,11 +31,11 @@ export const CountControl = (props) => {
     return (
       <div className='countControl'>
         <button id='increaseCount' onClick={increaseCount}>
-          Up Count
+        Збільшити кількість
         </button>
         <div>{settings.countValue}</div>
         <button id='decreaseCount' onClick={decreaseCount}>
-          Down Count
+        Зменшити кількість
         </button>
       </div>
     );
@@ -43,11 +43,11 @@ export const CountControl = (props) => {
     return (
       <div className='countControl'>
         <button disabled id='increaseCount' onClick={increaseCount}>
-          Up Count
+        Збільшити кількість
         </button>
         <div>{settings.countValue}</div>
         <button disabled id='decreaseCount' onClick={decreaseCount}>
-          Down Count
+        Зменшити кількість
         </button>
       </div>
     );

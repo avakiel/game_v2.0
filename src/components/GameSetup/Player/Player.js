@@ -12,21 +12,24 @@ export const Player = (props) => {
 
     const setPlayer = () => {
         let player = document.querySelector('.playerName').value
-        dispatch(pushPlayer(player))
+        if (player !== '') {
+            dispatch(pushPlayer(player))
+        }
+        
     }
     if (settings.confirmSettings === true) {
         return (
             <div className='player'>
-                <input disabled id='playerName' className='playerName'></input>
-                <button disabled id='addPlayer' className='addPlayer' onClick={setPlayer}>ADD PLAYER</button>
+                <input disabled id='playerName' className='playerName' defaultValue=''></input>
+                <button disabled id='addPlayer' className='addPlayer' onClick={setPlayer}>Новий гравець</button>
             </div>
         )
     } else {
         return (
             <div className='player'>
-                <input id='playerName' className='playerName'></input>
-                <button id='addPlayer' className='addPlayer' onClick={setPlayer}>ADD PLAYER</button>
+                <input id='playerName' className='playerName' defaultValue=''></input>
+                <button id='addPlayer' className='addPlayer' onClick={setPlayer}>Новий гравець</button>
             </div>
         )
-    }
+    } 
 }

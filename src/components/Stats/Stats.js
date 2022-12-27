@@ -12,8 +12,8 @@ function Stats(props) {
       <div className='statsInfo'>
 
         <div className='playerInfo'>
-          <p>Your Score:{players.length === 0?'' : score} </p>
-          <p>Your Name: {players.length === 0?'' : players[players.length-1].name} </p>
+          <p className='scoreRow'>Рахунок:{players.length === 0?'' : score} </p>
+          <p className='playerRow'>Гравець: {players.length === 0?'' : players[players.length-1].name} </p>
           <SkillLevel />
         </div>
       </div>

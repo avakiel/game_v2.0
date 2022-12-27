@@ -9,8 +9,8 @@ export const fameReducer = createSlice({
         tablet: []
     },
     reducers: {
-        pushTablet: (state,payload) => {
-            state.tablet.push(payload)
+        pushTablet: (state,data) => {
+            state.tablet.push(data.payload)
         }
     }
     
