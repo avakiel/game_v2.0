@@ -89,6 +89,65 @@ body {
   padding-left: 15%;
   padding-top: 10%;
 }
+.playerName {
+  height: 30px;
+  -webkit-border-radius: 60px;
+  border-radius: 60px;
+  border: none;
+  cursor: pointer;
+  font-family: sans-serif;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 5%;
+}
+.addPlayer {
+  background-color: #89dda9;
+  color: #104056;
+  font-weight: 600;
+  width: 100px;
+  -webkit-border-radius: 60px;
+  border-radius: 60px;
+  border: none;
+  cursor: pointer;
+  font-family: sans-serif;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 5%;
+}
+.addButton {
+  animation: glo 1300ms infinite;
+  background-color: #39f882;
+  font-size: 14px;
+  font-weight: 600;
+  color: #104056;
+  background-color: #1cc3c9;
+  -webkit-border-radius: 60px;
+  border-radius: 60px;
+  border: none;
+  color: #06405f;
+  cursor: pointer;
+  font-family: sans-serif;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 5%;
+}
+@keyframes glo {
+  0% {
+    background-color: #50e381;
+    box-shadow: 0 5px 20px #39f882;
+  }
+  50% {
+    background-color: #43f4a1;
+    box-shadow: 0 5px 50px #078f07;
+  }
+  100% {
+    background-color: #28e85e;
+    box-shadow: 0 5px 20px #6ee326;
+  }
+}
 /* player */
 
 /* settings */
