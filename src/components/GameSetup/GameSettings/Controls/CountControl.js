@@ -18,11 +18,11 @@ export const CountControl = (props) => {
   if (props.status === false && props.check === false) {
     return (
       <div className='countControl'>
-        <button disabled id='increaseCount' onClick={increaseCount}>
+        <button disabled id='increaseCount' className="increaseCount" onClick={increaseCount}>
           Збільшити кількість
         </button>
-        <div>{settings.countValue}</div>
-        <button disabled id='decreaseCount' onClick={decreaseCount}>
+        <div className="countValue">{settings.countValue}</div>
+        <button disabled id='decreaseCount' className="decreaseCount" onClick={decreaseCount}>
           Зменшити кількість
         </button>
       </div>
@@ -30,11 +30,11 @@ export const CountControl = (props) => {
   } else if (props.status === true && props.check === false) {
     return (
       <div className='countControl'>
-        <button id='increaseCount' onClick={increaseCount}>
+        <button id='increaseCount' className="increaseCount" onClick={increaseCount}>
         Збільшити кількість
         </button>
-        <div>{settings.countValue}</div>
-        <button id='decreaseCount' onClick={decreaseCount}>
+        <div className="countValue">{settings.countValue}</div>
+        <button id='decreaseCount' className="decreaseCount" onClick={decreaseCount}>
         Зменшити кількість
         </button>
       </div>
@@ -42,11 +42,11 @@ export const CountControl = (props) => {
   } else if (props.check === true) {
     return (
       <div className='countControl'>
-        <button disabled id='increaseCount' onClick={increaseCount}>
+        <button disabled id='increaseCount' className="increaseCount" onClick={increaseCount}>
         Збільшити кількість
         </button>
-        <div>{settings.countValue}</div>
-        <button disabled id='decreaseCount' onClick={decreaseCount}>
+        <div className="countValue">{settings.countValue}</div>
+        <button disabled id='decreaseCount' className="decreaseCount" onClick={decreaseCount}>
         Зменшити кількість
         </button>
       </div>

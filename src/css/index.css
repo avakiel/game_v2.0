@@ -123,16 +123,6 @@ body {
   font-weight: 600;
   color: #104056;
   background-color: #1cc3c9;
-  -webkit-border-radius: 60px;
-  border-radius: 60px;
-  border: none;
-  color: #06405f;
-  cursor: pointer;
-  font-family: sans-serif;
-  padding: 10px 10px;
-  text-align: center;
-  text-decoration: none;
-  margin-bottom: 5%;
 }
 @keyframes glo {
   0% {
@@ -151,12 +141,47 @@ body {
 /* player */
 
 /* settings */
+.buttons {
+  -webkit-border-radius: 60px;
+  border-radius: 60px;
+  border: none;
+  cursor: pointer;
+  font-family: sans-serif;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 5%;
+}
 .controls {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   padding-left: 15%;
   gap: 20px;
+}
+.activeSetup {
+  animation: gloSetup 1300ms infinite;
+}
+.checkSetup {
+  
+  background-color: #a9efe1;
+  color: #104056;
+  font-weight: 600;
+  width: 300px;
+}
+@keyframes gloSetup {
+  0% {
+    background-color: #50e3d7;
+    box-shadow: 0 5px 20px #05bdde;
+  }
+  50% {
+    background-color: #43f4d7;
+    box-shadow: 0 5px 50px #078f7f;
+  }
+  100% {
+    background-color: #28e8db;
+    box-shadow: 0 5px 20px #26e3d6;
+  }
 }
 
 .checkSetup {

@@ -31,14 +31,14 @@ export const Player = (props) => {
         return (
             <div className='player'>
                 <input disabled id='playerName' className='playerName' defaultValue='' onChange={lightIt}></input>
-                <button disabled id='addPlayer' className='addPlayer' onClick={setPlayer}>Добавити гравця</button>
+                <button disabled id='addPlayer' className='addPlayer buttons' onClick={setPlayer}>Добавити гравця</button>
             </div>
         )
     } else {
         return (
             <div className='player'>
                 <input id='playerName' className='playerName' defaultValue='' onChange={lightIt} placeholder='Введіть ваше імя...'></input>
-                <button id='addPlayer' className='addPlayer' onClick={setPlayer} onMouseDown={lightIt}>Добавити гравця</button>
+                <button id='addPlayer' className='addPlayer buttons' onClick={setPlayer} onMouseDown={lightIt}>Добавити гравця</button>
             </div>
         )
     }

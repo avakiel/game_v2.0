@@ -20,7 +20,7 @@ function setCheck() {
       <div className='controls'>
         <CountControl status={players.length === 0?false:players[players.length-1].ReadySettings} check={settings.confirmSettings} />
         <SpeedControl status={players.length === 0?false:players[players.length-1].ReadySettings} check={settings.confirmSettings}/>
-        <button disabled className="checkSetup" onClick={setCheck}>Я готовий!</button>
+        <button disabled className="checkSetup buttons" onClick={setCheck}>Я готовий!</button>
       </div>
     );
   } else if (settings.speedValue !== 0 && settings.countValue !== 0 && settings.confirmSettings === false) {
@@ -28,7 +28,7 @@ function setCheck() {
       <div className='controls'>
         <CountControl status={players.length === 0?false:players[players.length-1].ReadySettings} check={settings.confirmSettings} />
         <SpeedControl status={players.length === 0?false:players[players.length-1].ReadySettings} check={settings.confirmSettings}/>
-        <button className="checkSetup" onClick={setCheck}>Я готовий!</button>
+        <button className="checkSetup addButton activeSetup buttons" onClick={setCheck}>Я готовий!</button>
       </div>
     );
   } else if (settings.speedValue !== 0 && settings.countValue !== 0 && settings.confirmSettings === true) {
@@ -36,7 +36,7 @@ function setCheck() {
       <div className='controls'>
         <CountControl status={players.length === 0?false:players[players.length-1].ReadySettings} check={settings.confirmSettings} />
         <SpeedControl status={players.length === 0?false:players[players.length-1].ReadySettings} check={settings.confirmSettings}/>
-        <button disabled className="checkSetup" onClick={setCheck}>Я готовий!</button>
+        <button disabled className="checkSetup buttons" onClick={setCheck}>Я готовий!</button>
       </div>
     );
   }
