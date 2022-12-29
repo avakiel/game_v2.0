@@ -17,11 +17,11 @@ export const SpeedControl = (props) => {
   if (props.status === false && props.check === false) {
     return (
       <div className='speedControl'>
-        <button disabled id='increaseSpeed' onClick={increaseSpeed}>
+        <button disabled id='increaseSpeed' className="increaseCount buttons" onClick={increaseSpeed}>
           Збільшити швидкість
         </button>
-        <div>{settings.speedValue}</div>
-        <button disabled id='decreaseSpeed' onClick={decreaseSpeed}>
+        <div className="countValue buttons">{settings.speedValue}</div>
+        <button disabled id='decreaseSpeed' className="decreaseCount buttons" onClick={decreaseSpeed}>
           Зменшити швидкість
         </button>
       </div>
@@ -29,11 +29,11 @@ export const SpeedControl = (props) => {
   } else if (props.status === true && props.check === false) {
     return (
       <div className='speedControl'>
-        <button id='increaseSpeed' onClick={increaseSpeed}>
+        <button id='increaseSpeed' className="increaseCount buttons activeCountPlus" onClick={increaseSpeed}>
         Збільшити швидкість
         </button>
-        <div>{settings.speedValue}</div>
-        <button id='decreaseSpeed' onClick={decreaseSpeed}>
+        <div className="countValue buttons">{settings.speedValue}</div>
+        <button id='decreaseSpeed' className="decreaseCount buttons activeCountMinus" onClick={decreaseSpeed}>
         Зменшити швидкість
         </button>
       </div>
@@ -41,11 +41,11 @@ export const SpeedControl = (props) => {
   } else if (props.check === true) {
     return (
       <div className='speedControl'>
-        <button disabled id='increaseSpeed' onClick={increaseSpeed}>
+        <button disabled id='increaseSpeed' className="increaseCount buttons" onClick={increaseSpeed}>
          Збільшити швидкість
         </button>
-        <div>{settings.speedValue}</div>
-        <button disabled id='decreaseSpeed' onClick={decreaseSpeed}>
+        <div className="countValue buttons">{settings.speedValue}</div>
+        <button disabled id='decreaseSpeed' className="decreaseCount buttons" onClick={decreaseSpeed}>
         Зменшити швидкість
         </button>
       </div>
