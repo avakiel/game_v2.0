@@ -133,7 +133,6 @@ function GameBoard(props) {
     return (
       <>
         <div><button className='startButton' id="startButton" onClick={startGame}>Почати гру!</button></div>
-        <div><button className='endThis' onClick={endThis}>Закінчити гру</button></div>
         <div className='gameItem'>
           <div id='1' className="flashItem"></div>
           <div id='2' className="flashItem"></div>
@@ -153,7 +152,7 @@ function GameBoard(props) {
         </div>
       </>
     );
-  }
+  } 
 }
 
 
