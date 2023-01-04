@@ -1,9 +1,12 @@
 import React from 'react'
 
 function SkillLevel() {
+
+
+
   return (
     <div className='skillLevel'>
-          <div className='easy'>
+          <div className='easy skillCheck'>
             Easy <br />
             +0
           </div>

@@ -5,28 +5,23 @@ export const settingsReducer = createSlice({
     initialState: {
         speedValue: 0,
         countValue: 0,
-        confirmSettings: false, 
+        confirmSettings: false,
     },
     reducers: {
-        plusSpeed: (state) => {
-            state.speedValue++
+        setSettings: (state, data) => {
+            state.countValue = data.payload.count
+            state.speedValue = data.payload.speed
+            state.confirmSettings = data.payload.confirm
         },
-        minusSpeed: (state) => {
-            state.speedValue--
-        },
-        plusCount: (state) => {
-            state.countValue++
-        },
-        minusCount: (state) => {
-            state.countValue--
-        },
-        confirmSettings: (state, data) => {
-            state.confirmSettings = data.payload
+        refreshSettings: (state) => {
+            state.speedValue = 0
+            state.countValue = 0
+            state.confirmSettings = false
         }
     }
 })
 
-export const {plusSpeed, minusSpeed, plusCount, minusCount, confirmSettings} = settingsReducer.actions
+export const {setSettings, refreshSettings } = settingsReducer.actions
 
 export const selectSettings = state => state.settings
 export const selectSpeedValue = state => state.settings.speedValue

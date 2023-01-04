@@ -3,6 +3,7 @@
   padding: 0;
 }
 
+
 body {
   background: linear-gradient(to right, #63bdeb, #f9f99e);
 }
@@ -183,6 +184,8 @@ body {
   }
 }
 
+
+
 .checkSetup {
   grid-row: 2/3;
   grid-column: 1/3;
@@ -289,7 +292,9 @@ body {
   font-size: 25px;
   font-weight: 600;
 }
-
+.skillCheck {
+  
+}
 /* Stats */
 
 /* hallOfFame */
@@ -301,4 +306,7 @@ body {
 /* hallOfFame */
 ul {
   list-style-type: none;
+}
+.disabledButton {
+  background-color: #cacece;
 }

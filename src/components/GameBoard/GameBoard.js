@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { pushTablet, selectTablet } from '../../Store/FameReducer';
 import { playerTurn, refreshCount, selectGameState, setEndRandomLight, setFalseCount, setFlashRandom, setGameReady, setPlayerTurn, setStartRandomLight } from '../../Store/GameReducer';
-import { pushPlayer, refreshPlayer, selectPlayers } from '../../Store/PlayersReducer';
-import { refreshScore, selectScore, setScore } from '../../Store/ScoreReducer';
-import { confirmSettings, selectSettings } from '../../Store/SettingsReducer';
+import { pushPlayer, selectPlayers } from '../../Store/PlayersReducer';
+import { confirmSettings, refreshSettings, selectSettings } from '../../Store/SettingsReducer';
 
 
 
@@ -13,26 +12,17 @@ function GameBoard(props) {
   let tablet = useSelector(selectTablet)
   let gameState = useSelector(selectGameState)
   let gameSettings = useSelector(selectSettings)
-  let score = useSelector(selectScore)
   let players = useSelector(selectPlayers)
   let dispatch = useDispatch()
-
-  let [hideClass, setHideClass] = useState('hide')
-
   let settings = useSelector(selectSettings)
 
-  if (settings.confirmSettings === true && hideClass === 'hide' && gameState.gameReady === false) {
-    setHideClass('')
-  }
+  let [gameLoop, setGameLoop] = useState(false)
+  let [check, setCheck] = useState(false)
+
+
 
 
   function startGame() {
-    dispatch(setStartRandomLight(false))
-    dispatch(setGameReady(true))
-    setHideClass('hide')
-    dispatch(setStartRandomLight(true))
-
-
     function randomInteger(min, max) {
       let rand = min - 0.5 + Math.random() * (max - min + 1);
       return Math.round(rand);
@@ -46,9 +36,12 @@ function GameBoard(props) {
     for (let i = 0; i < startArrLength; i++) {
       gameArr.push(randomInteger(min, max))
     }
-    dispatch(setFlashRandom(gameArr))
+    dispatch(setFlashRandom(gameArr)) ///??????
     flashLight(gameArr)
   }
+
+
+
   function turnOffFlash(item) {
     setTimeout(() => {
       item.classList.remove('active')
@@ -56,6 +49,7 @@ function GameBoard(props) {
   }
 
   function flashLight(arr) {
+    setGameLoop(true)
     let flashTurn = arr
     let flashItems = document.querySelectorAll('.flashItem')
     let gameTimeOut = 1000 - gameSettings.speedValue * 10
@@ -72,9 +66,8 @@ function GameBoard(props) {
         }
       }
     }
-    dispatch(setEndRandomLight(true))
-    dispatch(setStartRandomLight(false))
-    dispatch(setPlayerTurn(true))
+    setGameLoop(false)
+    setCheck(true)
   }
 
   function totalEnd() {
@@ -83,21 +76,13 @@ function GameBoard(props) {
 
     dispatch(pushTablet({
       name: players[players.length - 1].name,
-      score: score
+      score: players[players.length - 1].score
     }))
-    dispatch(refreshScore())
-    dispatch(refreshPlayer())
-    dispatch(setGameReady(false))
-    console.log(tablet)
   }
 
 
   function gameEnd() {
     document.querySelectorAll('.flashItem').forEach(item => item.style.backgroundColor = '')
-    dispatch(setGameReady(false))
-    setHideClass('')
-    dispatch(setStartRandomLight(false))
-    dispatch(setEndRandomLight(false))
   }
 
 
@@ -105,55 +90,50 @@ function GameBoard(props) {
   let randomArr = gameState.flashRandom
   let playerCheck = []
   let count = 0
-  let wrong = 0
-
-
-
-  if (gameState.falseCount >= 5) {
-    setHideClass('hide')
-    dispatch(refreshCount())
-    totalEnd()
-    dispatch(setPlayerTurn(false))
-    playerCheck = []
-    count = 0
-    dispatch(confirmSettings(false))
-  }
-
-
-
 
 
   function itemCheck(event) {
     if (gameState.playerTurn === true) {
       playerCheck.push(Number(event.target.id))
       if (Number(event.target.id) === randomArr[count]) {
-        event.target.style.backgroundColor = 'green'
         count++
+        checkCorrect(event)
       } else if (Number(event.target.id) !== randomArr[count]) {
+        checkWrong(event)
         count++
-        wrong++
-        event.target.style.backgroundColor = 'red'
       }
       if (playerCheck.length === randomArr.length) {
-        dispatch(setFalseCount(wrong))
-        dispatch(setPlayerTurn(false))
-        dispatch(setScore(count - wrong > 0 ? (count - wrong) * 35 : 0))
+        // dispatch(setScore(count - wrong > 0 ? (count - wrong) * 35 : 0))
         count = 0
         playerCheck = []
         setTimeout(gameEnd, 1000)
       }
-
     }
+  }
+  function checkCorrect(item) {
+    item.target.style.backgroundColor = '#43de05'
+  }
+
+  function checkWrong(item) {
+    item.target.style.backgroundColor = '#e32626'
+  }
+
+  function endThis() {
+    document.querySelectorAll('.flashItem').forEach(item => item.style.backgroundColor = '')
+    dispatch(pushTablet({
+      name: players[players.length - 1].name,
+      score: players[players.length - 1].score
+    }))
   }
 
 
 
 
-
-  if (gameState.startRandomLight === false && gameState.endRandomLight === false) {
+  if (settings.confirmSettings === true) {
     return (
       <>
-        <button className={hideClass} id="startButton" onClick={startGame}>Почати гру!</button>
+        <div><button className='startButton' id="startButton" onClick={startGame}>Почати гру!</button></div>
+        <div><button className='endThis' onClick={endThis}>Закінчити гру</button></div>
         <div className='gameItem'>
           <div id='1' className="flashItem"></div>
           <div id='2' className="flashItem"></div>
@@ -162,21 +142,18 @@ function GameBoard(props) {
         </div>
       </>
     );
-  } else if (gameState.endRandomLight === true) {
+  } else if (settings.confirmSettings === false) {
     return (
       <>
-        <button className={hideClass} id="startButton" onClick={startGame}>Почати гру!</button>
         <div className='gameItem'>
-          <div id='1' className="flashItem" onClick={itemCheck}></div>
-          <div id='2' className="flashItem" onClick={itemCheck}></div>
-          <div id='3' className="flashItem" onClick={itemCheck}></div>
-          <div id='4' className="flashItem" onClick={itemCheck}></div>
+          <div id='1' className="flashItem"></div>
+          <div id='2' className="flashItem"></div>
+          <div id='3' className="flashItem"></div>
+          <div id='4' className="flashItem"></div>
         </div>
       </>
     );
   }
-
-
 }
 
 

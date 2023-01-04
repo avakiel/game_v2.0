@@ -1,42 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPlayers } from "../../../Store/PlayersReducer";
-import { confirmSettings, selectSettings, setSetup } from "../../../Store/SettingsReducer";
-import { CountControl } from "./Controls/CountControl";
-import { SpeedControl } from "./Controls/SpeedControl";
+import { selectSettings, setSettings } from "../../../Store/SettingsReducer";
+import Controls from "./Controls/Controls";
 
-export  const  GameSettings = (props) => {
+
+export const GameSettings = (props) => {
   let players = useSelector(selectPlayers)
   let settings = useSelector(selectSettings)
   let dispatch = useDispatch()
+  let [flashCount, setFlashCount] = useState(0)
+  let [flashSpeed, setFlashSpeed] = useState(0)
 
 
-function setCheck() {
-  dispatch(confirmSettings(true))
-}
+  function setCheck() {
+    dispatch(setSettings({
+      count: flashCount,
+      speed: flashSpeed,
+      confirm: true
+    }))
+  }
 
-  if (settings.speedValue === 0 || settings.countValue === 0) {
+  if (players.length !== 0 && flashCount !== 0 && flashSpeed !== 0 && settings.confirmSettings === false) {
     return (
       <div className='controls'>
-        <CountControl status={players.length === 0?false:players[players.length-1].ReadySettings} check={settings.confirmSettings} />
-        <SpeedControl status={players.length === 0?false:players[players.length-1].ReadySettings} check={settings.confirmSettings}/>
-        <button disabled className="checkSetup buttons" onClick={setCheck}>Я готовий!</button>
+        <Controls value={flashCount} setValue={setFlashCount} name='Кількість' />
+        <Controls value={flashSpeed} setValue={setFlashSpeed} name='Швидкість' />
+        <button className="checkSetup buttons" onClick={setCheck}>Я готовий!</button>
       </div>
     );
-  } else if (settings.speedValue !== 0 && settings.countValue !== 0 && settings.confirmSettings === false) {
+  } else if (players.length === 0) {
     return (
       <div className='controls'>
-        <CountControl status={players.length === 0?false:players[players.length-1].ReadySettings} check={settings.confirmSettings} />
-        <SpeedControl status={players.length === 0?false:players[players.length-1].ReadySettings} check={settings.confirmSettings}/>
-        <button className="checkSetup addButton activeSetup buttons" onClick={setCheck}>Я готовий!</button>
+        <Controls value={flashCount} setValue={setFlashCount} name='Кількість' disabled={true} />
+        <Controls value={flashSpeed} setValue={setFlashSpeed} name='Швидкість' disabled={true} />
+        <button disabled className="checkSetup buttons disabledButton" onClick={setCheck}>Я готовий!</button>
       </div>
     );
-  } else if (settings.speedValue !== 0 && settings.countValue !== 0 && settings.confirmSettings === true) {
+  } else if ((flashCount === 0 && players.length !== 0 && settings.confirmSettings === false) || (flashSpeed === 0 && players.length !== 0 && settings.confirmSettings === false)) {
     return (
       <div className='controls'>
-        <CountControl status={players.length === 0?false:players[players.length-1].ReadySettings} check={settings.confirmSettings} />
-        <SpeedControl status={players.length === 0?false:players[players.length-1].ReadySettings} check={settings.confirmSettings}/>
-        <button disabled className="checkSetup buttons" onClick={setCheck}>Я готовий!</button>
+        <Controls value={flashCount} setValue={setFlashCount} name='Кількість' />
+        <Controls value={flashSpeed} setValue={setFlashSpeed} name='Швидкість' />
+        <button disabled className="checkSetup buttons disabledButton" onClick={setCheck}>Я готовий!</button>
+      </div>
+    );
+  } else if (settings.confirmSettings === true) {
+    return (
+      <div className='controls'>
+        <Controls value={flashCount} setValue={setFlashCount} name='Кількість' disabled={true} />
+        <Controls value={flashSpeed} setValue={setFlashSpeed} name='Швидкість' disabled={true} />
+        <button disabled className="checkSetup buttons disabledButton" onClick={setCheck}>Я готовий!</button>
       </div>
     );
   }

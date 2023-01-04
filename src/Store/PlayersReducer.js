@@ -10,17 +10,15 @@ export const playersReducer = createSlice({
             return {allPlayers:[...state.allPlayers, 
                 {
                 name:data.payload,
-                ReadySettings: true
+                ReadySettings: true,
+                score: 0
             }
         ]}
         },
-        refreshPlayer: (state) => {
-            state.allPlayers = []
-        }
     }
 })
 
-export const {pushPlayer, refreshPlayer} = playersReducer.actions
+export const {pushPlayer} = playersReducer.actions
 
 export const selectPlayers = state => state.players.allPlayers
 

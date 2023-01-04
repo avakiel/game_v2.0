@@ -10,6 +10,8 @@ export const Player = (props) => {
 
 
     const dispatch = useDispatch()
+
+    
     function lightIt(event) {
         let player = document.querySelector('.playerName').value
         let button = document.getElementById('addPlayer')
