@@ -1,27 +1,23 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { pushTablet, selectTablet } from "../../Store/FameReducer";
+import { pushTablet} from "../../Store/FameReducer";
 import {
-  playerTurn,
-  refreshCount,
+  refreshGame,
   selectGameState,
-  setEndRandomLight,
-  setFalseCount,
   setFlashRandom,
-  setGameReady,
-  setPlayerTurn,
-  setStartRandomLight,
 } from "../../Store/GameReducer";
-import { pushPlayer, selectPlayers } from "../../Store/PlayersReducer";
+import { playerScore, refreshPlayer, selectPlayers } from "../../Store/PlayersReducer";
 import {
-  confirmSettings,
   refreshSettings,
   selectSettings,
 } from "../../Store/SettingsReducer";
 
+
+
+
+
 function GameBoard(props) {
-  let tablet = useSelector(selectTablet);
   let gameState = useSelector(selectGameState);
   let gameSettings = useSelector(selectSettings);
   let players = useSelector(selectPlayers);
@@ -29,11 +25,13 @@ function GameBoard(props) {
   let settings = useSelector(selectSettings);
 
   const [imFlashed, setImFlashed] = useState(false);
+  const [hideClass, setHideClass] = useState('')
+  const [falseCounter, setFalseCounter] = useState(0)
+  let falsePerRound = 0
 
-  let [gameLoop, setGameLoop] = useState(false);
-  let [check, setCheck] = useState(false);
 
   function startGame() {
+    setHideClass('hide')
     const gameArr = getGameArray();
     // hide button !!!!!
     flashLight(gameArr);
@@ -91,24 +89,40 @@ function GameBoard(props) {
   }
 
   function totalEnd() {
+
+    setFalseCounter(0)
+    setImFlashed(false)
+    setHideClass('')
+    dispatch(refreshSettings())
+    dispatch(refreshGame())
+    dispatch(refreshPlayer())
+    dispatch(
+      pushTablet({
+        name: players.player,
+        score: players.score,
+      })
+    );
+
     document
       .querySelectorAll(".flashItem")
       .forEach((item) => (item.style.backgroundColor = ""));
     alert("game over");
 
-    dispatch(
-      pushTablet({
-        name: players[players.length - 1].name,
-        score: players[players.length - 1].score,
-      })
-    );
+    playerCheck = []
+    count = 0
+    falsePerRound = 0
+
   }
+
+
 
   function gameEnd() {
     document
       .querySelectorAll(".flashItem")
       .forEach((item) => (item.style.backgroundColor = ""));
-      setImFlashed(false)
+    setHideClass('')
+    setFalseCounter(falseCounter + falsePerRound)
+    dispatch(playerScore(Math.round(randomArr.length - falsePerRound)))
   }
 
   let randomArr = gameState.flashRandom;
@@ -116,29 +130,33 @@ function GameBoard(props) {
   let count = 0;
 
   function itemCheck(event) {
-      playerCheck.push(Number(event.target.id));
-      if (Number(event.target.id) === randomArr[count]) {
-        count++;
-        checkCorrect(event);
-      } else if (Number(event.target.id) !== randomArr[count]) {
-        checkWrong(event);
-        count++;
-      }
-      if (playerCheck.length === randomArr.length) {
-        // dispatch(setScore(count - wrong > 0 ? (count - wrong) * 35 : 0))
-        count = 0;
-        playerCheck = [];
-        setTimeout(gameEnd, 1000);
-      }
-  
+    playerCheck.push(Number(event.target.id));
+    if (Number(event.target.id) === randomArr[count]) {
+      count++;
+      checkCorrect(event);
+    } else if (Number(event.target.id) !== randomArr[count]) {
+      checkWrong(event);
+      count++;
+    }
+    if (playerCheck.length === randomArr.length) {
+      count = 0;
+      playerCheck = [];
+      setTimeout(gameEnd, 1000);
+      setImFlashed(false)
+    }
+  }
+  if (falseCounter >= 5) {
+    totalEnd()
   }
 
   function checkCorrect(item) {
     item.target.style.backgroundColor = "#43de05";
+
   }
 
   function checkWrong(item) {
     item.target.style.backgroundColor = "#e32626";
+    falsePerRound++
   }
 
   function endThis() {
@@ -168,7 +186,7 @@ function GameBoard(props) {
     return (
       <>
         <div>
-          <button className='startButton' id='startButton' onClick={startGame}>Почати гру!</button>
+          <button className={hideClass} id='startButton' onClick={startGame}>Почати гру!</button>
         </div>
         <div className='gameItem'>
           <div id='1' className='flashItem'></div>
@@ -181,6 +199,9 @@ function GameBoard(props) {
   } else if (settings.confirmSettings === true && imFlashed === true) {
     return (
       <>
+        <div>
+          <button className={hideClass} id='startButton' onClick={startGame}>Почати гру!</button>
+        </div>
         <div className='gameItem'>
           <div id='1' className='flashItem' onClick={itemCheck}></div>
           <div id='2' className='flashItem' onClick={itemCheck}></div>

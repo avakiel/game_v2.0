@@ -5,11 +5,7 @@ export const gameReducer = createSlice({
     initialState: {
         flashRandom: [],
         flashCheck: [],
-        startRandomLight: false,
-        endRandomLight: false,
         gameReady: false,
-        falseCount: 0,
-        playerTurn: false
     },
     reducers:{
         setGameReady: (state,data) => {
@@ -18,25 +14,15 @@ export const gameReducer = createSlice({
         setFlashRandom: (state, data) => {
             state.flashRandom = [...data.payload]
         },
-        setEndRandomLight: (state, data) => {
-            state.endRandomLight = data.payload
-        },
-        setStartRandomLight: (state,data) => {
-            state.startRandomLight = data.payload
-        },
-        setFalseCount: (state, data) => {
-            state.falseCount = state.falseCount + data.payload
-        },
-        refreshCount: (state) => {
-            state.falseCount = 0
-        },
-        setPlayerTurn: (state, data) => {
-            state.playerTurn = data.payload
+        refreshGame: (state) => {
+            state.flashCheck = []
+            state.flashRandom = []
+            state.gameReady = false
         }
     }
 })
 
-export const { setFlashRandom, setEndRandomLight, setGameReady, setStartRandomLight, setFalseCount, refreshCount, setPlayerTurn} = gameReducer.actions
+export const { setFlashRandom, setGameReady, refreshGame} = gameReducer.actions
 
 export const selectGameState = state => state.game
 export const selectFlashRandom = state => state.game.flashRandom

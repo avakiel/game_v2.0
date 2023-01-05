@@ -26,10 +26,10 @@ export const GameSettings = (props) => {
       <div className='controls'>
         <Controls value={flashCount} setValue={setFlashCount} name='Кількість' />
         <Controls value={flashSpeed} setValue={setFlashSpeed} name='Швидкість' />
-        <button className="checkSetup buttons" onClick={setCheck}>Я готовий!</button>
+        <button className="checkSetup buttons addButton" onClick={setCheck}>Я готовий!</button>
       </div>
     );
-  } else if (players.length === 0) {
+  } else if (players.player === '') {
     return (
       <div className='controls'>
         <Controls value={flashCount} setValue={setFlashCount} name='Кількість' disabled={true} />

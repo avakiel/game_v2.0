@@ -2,8 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 export const fameReducer = createSlice({
-    
-
     name: 'fame',
     initialState: {
         tablet: []

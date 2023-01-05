@@ -37,6 +37,9 @@ body {
   visibility: hidden;
 }
 #startButton {
+  position:absolute;
+  left: 42%;
+  top: 30%;
   display: flex;
   align-items: center;
   justify-content: center;

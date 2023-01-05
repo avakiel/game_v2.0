@@ -3,23 +3,29 @@ import { createSlice } from "@reduxjs/toolkit";
 export const playersReducer = createSlice({
     name: 'players',
     initialState: {
-        allPlayers: []
+        player: '',
+        score: '',
+        confirmSettings: false
     },
     reducers: {
         pushPlayer: (state,data) => {
-            return {allPlayers:[...state.allPlayers, 
-                {
-                name:data.payload,
-                ReadySettings: true,
-                score: 0
-            }
-        ]}
+           state.player = data.payload
+           state.confirmSettings = true
+           state.score = 0
         },
+        playerScore: (state, data) => {
+            state.score += data.payload
+        },
+        refreshPlayer: (state) => {
+            state.confirmSettings = false
+            state.player = ''
+            state.score = ''
+        }
     }
 })
 
-export const {pushPlayer} = playersReducer.actions
+export const {pushPlayer, playerScore, refreshPlayer} = playersReducer.actions
 
-export const selectPlayers = state => state.players.allPlayers
+export const selectPlayers = state => state.players
 
 export default playersReducer.reducer

@@ -26,11 +26,11 @@ export default function Controls(props) {
     } else {
         return (
             <div className='countControl'>
-                <button id='increaseCount' className="increaseCount buttons" onClick={increase}>
+                <button id='increaseCount' className="increaseCount buttons activeCountPlus" onClick={increase}>
                     Збільшити {props.name}
                 </button>
                 <div className="countValue buttons">{props.value}</div>
-                <button id='decreaseCount' className="decreaseCount buttons" onClick={decrease}>
+                <button id='decreaseCount' className="decreaseCount buttons activeCountMinus" onClick={decrease}>
                     Зменшити {props.name}
                 </button>
             </div>

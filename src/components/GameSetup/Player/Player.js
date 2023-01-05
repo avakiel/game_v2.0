@@ -15,7 +15,7 @@ export const Player = (props) => {
     function lightIt(event) {
         let player = document.querySelector('.playerName').value
         let button = document.getElementById('addPlayer')
-        if (players.length === 0 && player !== '') {
+        if (players.player === '' && player !== '') {
             button.classList.add('addButton')
         }
     }
