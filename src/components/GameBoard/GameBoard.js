@@ -93,25 +93,20 @@ function GameBoard(props) {
     setFalseCounter(0)
     setImFlashed(false)
     setHideClass('')
+    dispatch(refreshPlayer())
     dispatch(refreshSettings())
     dispatch(refreshGame())
-    dispatch(refreshPlayer())
     dispatch(
       pushTablet({
         name: players.player,
         score: players.score,
       })
     );
-
-    document
-      .querySelectorAll(".flashItem")
-      .forEach((item) => (item.style.backgroundColor = ""));
     alert("game over");
 
     playerCheck = []
     count = 0
     falsePerRound = 0
-
   }
 
 
@@ -145,7 +140,7 @@ function GameBoard(props) {
       setImFlashed(false)
     }
   }
-  if (falseCounter >= 5) {
+  if (falseCounter >= 3) {
     totalEnd()
   }
 
