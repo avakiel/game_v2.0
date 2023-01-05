@@ -1,42 +1,56 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { pushTablet} from "../../Store/FameReducer";
+import { pushTablet } from "../../Store/FameReducer";
 import {
   refreshGame,
   selectGameState,
   setFlashRandom,
 } from "../../Store/GameReducer";
-import { playerScore, refreshPlayer, selectPlayers } from "../../Store/PlayersReducer";
 import {
-  refreshSettings,
-  selectSettings,
-} from "../../Store/SettingsReducer";
+  playerScore,
+  refreshPlayer,
+  selectPlayers,
+} from "../../Store/PlayersReducer";
+import { refreshSettings, selectSettings } from "../../Store/SettingsReducer";
 
-
-
-
-
-function GameBoard(props) {
+function GameBoard() {
   let gameState = useSelector(selectGameState);
   let gameSettings = useSelector(selectSettings);
   let players = useSelector(selectPlayers);
-  let dispatch = useDispatch();
   let settings = useSelector(selectSettings);
+  const dispatch = useDispatch();
 
   const [imFlashed, setImFlashed] = useState(false);
-  const [hideClass, setHideClass] = useState('')
-  const [falseCounter, setFalseCounter] = useState(0)
-  let falsePerRound = 0
+  const [hideClass, setHideClass] = useState("");
+  const [falseCounter, setFalseCounter] = useState(0);
+  const [turnCount, setTurnCount] = useState(0);
+  const [roundWrongTurns, setRoundWrongTurns] = useState(0);
 
+  useEffect(() => {
+    if (turnCount === randomArr.length) {
+      //count = 0;
+      //playerCheck = [];
+      setTimeout(gameEnd, 1000);
+      setImFlashed(false);
+      setTurnCount(0);
+    }
+  }, [turnCount]);
+
+  //let falsePerRound = 0
+
+  useEffect(() => {
+    if (falseCounter >= 3) {
+      totalEnd();
+    }
+  }, [falseCounter]);
 
   function startGame() {
-    setHideClass('hide')
+    setHideClass("hide");
     const gameArr = getGameArray();
     // hide button !!!!!
     flashLight(gameArr);
     dispatch(setFlashRandom(gameArr));
-
   }
 
   const randomise = (min, max) => {
@@ -89,69 +103,72 @@ function GameBoard(props) {
   }
 
   function totalEnd() {
+    setFalseCounter(0);
+    setImFlashed(false);
+    setHideClass("");
 
-    setFalseCounter(0)
-    setImFlashed(false)
-    setHideClass('')
-    dispatch(refreshPlayer())
-    dispatch(refreshSettings())
-    dispatch(refreshGame())
     dispatch(
       pushTablet({
         name: players.player,
         score: players.score,
       })
     );
+
+    dispatch(refreshGame());
+    dispatch(refreshSettings());
+    dispatch(refreshPlayer());
+
     alert("game over");
 
-    playerCheck = []
-    count = 0
-    falsePerRound = 0
+    //playerCheck = []
+    setTurnCount(0);
+    //count = 0
+    setRoundWrongTurns(0);
   }
-
-
 
   function gameEnd() {
     document
       .querySelectorAll(".flashItem")
       .forEach((item) => (item.style.backgroundColor = ""));
-    setHideClass('')
-    setFalseCounter(falseCounter + falsePerRound)
-    dispatch(playerScore(Math.round(randomArr.length - falsePerRound)))
+    setHideClass("");
+    setFalseCounter(falseCounter + roundWrongTurns);
+    dispatch(playerScore(Math.round(randomArr.length - roundWrongTurns)));
   }
 
   let randomArr = gameState.flashRandom;
-  let playerCheck = [];
-  let count = 0;
+  //let playerCheck = [];
+  //let count = 0;
 
-  function itemCheck(event) {
-    playerCheck.push(Number(event.target.id));
-    if (Number(event.target.id) === randomArr[count]) {
-      count++;
-      checkCorrect(event);
-    } else if (Number(event.target.id) !== randomArr[count]) {
-      checkWrong(event);
-      count++;
-    }
-    if (playerCheck.length === randomArr.length) {
-      count = 0;
-      playerCheck = [];
-      setTimeout(gameEnd, 1000);
-      setImFlashed(false)
+  function turnCheck(event) {
+    //playerCheck.push(Number(event.target.id));
+    if (Number(event.target.id) === randomArr[turnCount]) {
+      setTurnCount(turnCount + 1);
+      //count++;
+      signTurn(event, true);
+    } else if (Number(event.target.id) !== randomArr[turnCount]) {
+      signTurn(event, false);
+      setTurnCount(turnCount + 1);
+      //count++;
+      setRoundWrongTurns(roundWrongTurns + 1);
     }
   }
-  if (falseCounter >= 3) {
-    totalEnd()
-  }
 
-  function checkCorrect(item) {
+  
+
+  const signTurn = (event, isRight) => {
+    isRight
+      ? (event.target.style.backgroundColor = "#43de05")
+      : (event.target.style.backgroundColor = "#e32626");
+  };
+
+  /* function checkCorrect(item) {
     item.target.style.backgroundColor = "#43de05";
 
   }
 
   function checkWrong(item) {
     item.target.style.backgroundColor = "#e32626";
-    falsePerRound++
+    
   }
 
   function endThis() {
@@ -164,7 +181,7 @@ function GameBoard(props) {
         score: players[players.length - 1].score,
       })
     );
-  }
+  } */
 
   if (settings.confirmSettings === false) {
     return (
@@ -181,7 +198,9 @@ function GameBoard(props) {
     return (
       <>
         <div>
-          <button className={hideClass} id='startButton' onClick={startGame}>Почати гру!</button>
+          <button className={hideClass} id='startButton' onClick={startGame}>
+            Почати гру!
+          </button>
         </div>
         <div className='gameItem'>
           <div id='1' className='flashItem'></div>
@@ -195,13 +214,15 @@ function GameBoard(props) {
     return (
       <>
         <div>
-          <button className={hideClass} id='startButton' onClick={startGame}>Почати гру!</button>
+          <button className={hideClass} id='startButton' onClick={startGame}>
+            Почати гру!
+          </button>
         </div>
         <div className='gameItem'>
-          <div id='1' className='flashItem' onClick={itemCheck}></div>
-          <div id='2' className='flashItem' onClick={itemCheck}></div>
-          <div id='3' className='flashItem' onClick={itemCheck}></div>
-          <div id='4' className='flashItem' onClick={itemCheck}></div>
+          <div id='1' className='flashItem' onClick={turnCheck}></div>
+          <div id='2' className='flashItem' onClick={turnCheck}></div>
+          <div id='3' className='flashItem' onClick={turnCheck}></div>
+          <div id='4' className='flashItem' onClick={turnCheck}></div>
         </div>
       </>
     );

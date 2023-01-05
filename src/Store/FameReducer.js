@@ -8,7 +8,8 @@ export const fameReducer = createSlice({
     },
     reducers: {
         pushTablet: (state,data) => {
-            state.tablet.push(data.payload)
+            // @ts-ignore
+            state.tablet = [...state.tablet, data.payload] 
         }
     }
     

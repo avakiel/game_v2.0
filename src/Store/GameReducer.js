@@ -12,7 +12,7 @@ export const gameReducer = createSlice({
             state.gameReady = data.payload
         },
         setFlashRandom: (state, data) => {
-            state.flashRandom = [...data.payload]
+            state.flashRandom = data.payload
         },
         refreshGame: (state) => {
             state.flashCheck = []
