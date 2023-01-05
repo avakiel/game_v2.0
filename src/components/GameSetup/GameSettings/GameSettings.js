@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPlayers } from "../../../Store/PlayersReducer";
 import { selectSettings, setSettings } from "../../../Store/SettingsReducer";
@@ -20,6 +20,11 @@ export const GameSettings = (props) => {
       confirm: true
     }))
   }
+
+  useEffect(() => {
+    setFlashCount(settings.countValue)
+    setFlashSpeed(settings.speedValue)
+  }, [settings])
 
   if (players.length !== 0 && flashCount !== 0 && flashSpeed !== 0 && settings.confirmSettings === false) {
     return (
