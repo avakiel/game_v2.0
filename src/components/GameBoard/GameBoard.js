@@ -132,7 +132,7 @@ function GameBoard() {
       .forEach((item) => (item.style.backgroundColor = ""));
     setHideClass("");
     setFalseCounter(falseCounter + roundWrongTurns);
-    dispatch(playerScore(Math.round(randomArr.length - roundWrongTurns)));
+    dispatch(playerScore(randomArr.length - roundWrongTurns));
   }
 
   let randomArr = gameState.flashRandom;
