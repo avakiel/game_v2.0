@@ -81,6 +81,23 @@ body {
 .active {
     background-color: #f48c15;
 }
+.gloInput {
+  animation: gloInput 1300ms infinite;
+}
+@keyframes gloInput {
+  0% {
+    background-color: #c3ffe3;
+    box-shadow: 0 0 10px #bbf7cd;
+  }
+  50% {
+    background-color: #d5ffdc;
+    box-shadow: 0 0 30px #dbffed;
+  }
+  100% {
+    background-color: #e1fce1;
+    box-shadow: 0 0 10px #d0f5e1;
+  }
+}
 /* GameBoard */
 
 /* player */
@@ -264,6 +281,10 @@ body {
   font-weight: 600;
   font-size: 25px;
   color: #1c1357;
+}
+.skillCheck {
+  animation: gloInput 1300ms infinite;
+  border: 2px solid #a5ff65;
 }
 /* stats */
 

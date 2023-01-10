@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { pushPlayer, selectPlayers } from '../../../Store/PlayersReducer';
 import { selectSettings } from '../../../Store/SettingsReducer';
@@ -11,7 +11,6 @@ export const Player = (props) => {
 
     const dispatch = useDispatch()
 
-    
     function lightIt(event) {
         let player = document.querySelector('.playerName').value
         let button = document.getElementById('addPlayer')
@@ -21,11 +20,13 @@ export const Player = (props) => {
     }
 
 
+
     const setPlayer = () => {
         let player = document.querySelector('.playerName').value
         if (player !== '') {
             dispatch(pushPlayer(player))
             document.getElementById('addPlayer').classList.remove('addButton')
+            document.getElementById('playerName').classList.remove('gloInput')
         }
 
     }
@@ -39,7 +40,7 @@ export const Player = (props) => {
     } else {
         return (
             <div className='player'>
-                <input id='playerName' className='playerName' defaultValue='' onChange={lightIt} placeholder='Введіть ваше імя...'></input>
+                <input id='playerName' className='playerName gloInput' defaultValue='' onChange={lightIt} placeholder='Введіть ваше імя...'></input>
                 <button id='addPlayer' className='addPlayer buttons' onClick={setPlayer} onMouseDown={lightIt}>Добавити гравця</button>
             </div>
         )

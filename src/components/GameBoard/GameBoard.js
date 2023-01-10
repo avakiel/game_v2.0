@@ -28,19 +28,24 @@ function GameBoard() {
   const [roundWrongTurns, setRoundWrongTurns] = useState(0);
 
   useEffect(() => {
-    if (turnCount === randomArr.length) {
-      //count = 0;
-      //playerCheck = [];
+    if (turnCount === gameState.flashRandom.length) {
       setTimeout(gameEnd, 1000);
       setImFlashed(false);
       setTurnCount(0);
     }
   }, [turnCount]);
 
-  //let falsePerRound = 0
+  
 
   useEffect(() => {
     if (falseCounter >= 3) {
+      dispatch(playerScore(gameState.flashRandom.length - roundWrongTurns))
+      dispatch(
+        pushTablet({
+          name: players.player,
+          score: players.score,
+        })
+      );
       totalEnd();
     }
   }, [falseCounter]);
@@ -48,7 +53,6 @@ function GameBoard() {
   function startGame() {
     setHideClass("hide");
     const gameArr = getGameArray();
-    // hide button !!!!!
     flashLight(gameArr);
     dispatch(setFlashRandom(gameArr));
   }
@@ -107,23 +111,18 @@ function GameBoard() {
     setImFlashed(false);
     setHideClass("");
 
-    dispatch(
-      pushTablet({
-        name: players.player,
-        score: players.score,
-      })
-    );
+    
+    
 
     dispatch(refreshGame());
     dispatch(refreshSettings());
     dispatch(refreshPlayer());
-
+    
     alert("game over");
 
-    //playerCheck = []
     setTurnCount(0);
-    //count = 0
     setRoundWrongTurns(0);
+    document.querySelector('.playerName').value = ''
   }
 
   function gameEnd() {
@@ -132,23 +131,18 @@ function GameBoard() {
       .forEach((item) => (item.style.backgroundColor = ""));
     setHideClass("");
     setFalseCounter(falseCounter + roundWrongTurns);
-    dispatch(playerScore(randomArr.length - roundWrongTurns));
+    dispatch(playerScore(gameState.flashRandom.length - roundWrongTurns));
   }
 
-  let randomArr = gameState.flashRandom;
-  //let playerCheck = [];
-  //let count = 0;
+  
 
   function turnCheck(event) {
-    //playerCheck.push(Number(event.target.id));
-    if (Number(event.target.id) === randomArr[turnCount]) {
+    if (Number(event.target.id) === gameState.flashRandom[turnCount]) {
       setTurnCount(turnCount + 1);
-      //count++;
       signTurn(event, true);
-    } else if (Number(event.target.id) !== randomArr[turnCount]) {
+    } else if (Number(event.target.id) !== gameState.flashRandom[turnCount]) {
       signTurn(event, false);
       setTurnCount(turnCount + 1);
-      //count++;
       setRoundWrongTurns(roundWrongTurns + 1);
     }
   }
@@ -161,27 +155,11 @@ function GameBoard() {
       : (event.target.style.backgroundColor = "#e32626");
   };
 
-  /* function checkCorrect(item) {
-    item.target.style.backgroundColor = "#43de05";
-
-  }
-
-  function checkWrong(item) {
-    item.target.style.backgroundColor = "#e32626";
-    
-  }
+  
 
   function endThis() {
-    document
-      .querySelectorAll(".flashItem")
-      .forEach((item) => (item.style.backgroundColor = ""));
-    dispatch(
-      pushTablet({
-        name: players[players.length - 1].name,
-        score: players[players.length - 1].score,
-      })
-    );
-  } */
+    totalEnd()
+  } 
 
   if (settings.confirmSettings === false) {
     return (
