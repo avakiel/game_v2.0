@@ -26,6 +26,7 @@ function GameBoard() {
   const [falseCounter, setFalseCounter] = useState(0);
   const [turnCount, setTurnCount] = useState(0);
   const [roundWrongTurns, setRoundWrongTurns] = useState(0);
+  const [itemCounter, setItemCounter] = useState()
 
   useEffect(() => {
     if (turnCount === gameState.flashRandom.length) {
@@ -128,7 +129,10 @@ function GameBoard() {
   function gameEnd() {
     document
       .querySelectorAll(".flashItem")
-      .forEach((item) => (item.style.backgroundColor = ""));
+      .forEach((item) =>{
+        (item.classList.remove('flashItemTrue', 'flashItemFalse'))
+        item.innerHTML = ''
+      });
     setHideClass("");
     setFalseCounter(falseCounter + roundWrongTurns);
     dispatch(playerScore(gameState.flashRandom.length - roundWrongTurns));
@@ -140,7 +144,9 @@ function GameBoard() {
     if (Number(event.target.id) === gameState.flashRandom[turnCount]) {
       setTurnCount(turnCount + 1);
       signTurn(event, true);
+      event.target.innerHTML++
     } else if (Number(event.target.id) !== gameState.flashRandom[turnCount]) {
+      event.target.innerHTML++
       signTurn(event, false);
       setTurnCount(turnCount + 1);
       setRoundWrongTurns(roundWrongTurns + 1);
@@ -151,8 +157,8 @@ function GameBoard() {
 
   const signTurn = (event, isRight) => {
     isRight
-      ? (event.target.style.backgroundColor = "#43de05")
-      : (event.target.style.backgroundColor = "#e32626");
+      ? event.target.classList.add('flashItemTrue')
+      : event.target.classList.add('flashItemFalse');
   };
 
   

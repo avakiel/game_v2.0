@@ -22,6 +22,43 @@ body {
   border: 2px solid black;
   border-radius: 50%;
 }
+.flashItemTrue {
+  animation: flashItem 1200ms;
+  animation-iteration-count: 1;
+ 
+}
+@keyframes flashItem {
+  0% {
+    background-color: #66e350;
+    box-shadow: 0 0 20px #39f839;
+  }
+  50% {
+    background-color: #5ef443;
+    box-shadow: 0 0 30px #0aca03;
+  }
+  100% {
+    background-color: #55e828;
+    box-shadow: 0 0 20px #29e326;
+  }
+}
+.flashItemFalse {
+  animation: flashItemFalse 1200ms;
+  animation-iteration-count: 1;
+}
+@keyframes flashItemFalse {
+  0% {
+    background-color: #e35050;
+    box-shadow: 0 0 20px #f83939;
+  }
+  50% {
+    background-color: #f44343;
+    box-shadow: 0 0 30px #8f0707;
+  }
+  100% {
+    background-color: #e82828;
+    box-shadow: 0 0 20px #e32626;
+  }
+}
 .gameItem {
   display: flex;
   flex-direction: row;
@@ -325,7 +362,23 @@ body {
 .playerBoard {
   width: 300px;
   height: 300px;
-  background-color: white;
+  background-image: url(/pngtree-multicolor-rainbow-watercolor-splash-background-picture-image_942740.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-border-radius: 60px;
+  border-radius: 60px;
+  border: none;
+  font-family: sans-serif;
+  padding: 20px 10px;
+  display: flex;
+  justify-content: center;
+}
+.ScoreBoard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 25px;
+  font-weight: 600;
 }
 /* hallOfFame */
 ul {
