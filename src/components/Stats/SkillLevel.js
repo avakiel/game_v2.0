@@ -30,7 +30,7 @@ function SkillLevel() {
       removeSkillLight()
       document.querySelector('.god').classList.add('skillCheck')
     }
-  }, [settings])
+  }, [settings, player])
 
   function removeSkillLight() {
     let divs = document.querySelectorAll('.skillLight')

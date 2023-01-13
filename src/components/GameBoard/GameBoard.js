@@ -121,7 +121,6 @@ function GameBoard() {
     dispatch(refreshSettings());
     dispatch(refreshPlayer());
     
-    alert("game over");
 
     setTurnCount(0);
     setRoundWrongTurns(0);
@@ -172,6 +171,9 @@ function GameBoard() {
   if (settings.confirmSettings === false) {
     return (
       <>
+      <div className="endGame">
+        <button id="endGame" className="buttons hide" onClick={endThis}>Закінчити гру</button>
+      </div>
         <div className='gameItem'>
           <div id='1' className='flashItem'></div>
           <div id='2' className='flashItem'></div>
@@ -183,6 +185,9 @@ function GameBoard() {
   } else if (settings.confirmSettings === true && imFlashed === false) {
     return (
       <>
+      <div className="endGame">
+        <button id="endGame" className="buttons" onClick={endThis}>Закінчити гру</button>
+      </div>
         <div>
           <button className={hideClass} id='startButton' onClick={startGame}>
             Почати гру!
@@ -199,6 +204,9 @@ function GameBoard() {
   } else if (settings.confirmSettings === true && imFlashed === true) {
     return (
       <>
+      <div className="endGame">
+        <button id="endGame" className="buttons" onClick={endThis}>Закінчити гру</button>
+      </div>
         <div>
           <button className={hideClass} id='startButton' onClick={startGame}>
             Почати гру!
