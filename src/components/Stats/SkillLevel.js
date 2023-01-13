@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectPlayers } from '../../Store/PlayersReducer'
-import { selectSettings } from '../../Store/SettingsReducer'
+import { selectSettings, setDifficulty } from '../../Store/SettingsReducer'
 
 function SkillLevel() {
-
+  let dispatch = useDispatch()
   let settings = useSelector(selectSettings)
   let player = useSelector(selectPlayers)
 
@@ -17,20 +17,27 @@ function SkillLevel() {
     } else if (settings.countValue >= 3 && settings.countValue < 5) {
       removeSkillLight()
       document.querySelector('.normal').classList.add('skillCheck')
+      dispatch(setDifficulty(2))
     } else if (settings.countValue >= 5 && settings.countValue < 6) {
       removeSkillLight()
       document.querySelector('.notBad').classList.add('skillCheck')
+      dispatch(setDifficulty(4))
     } else if (settings.countValue >= 6 && settings.countValue < 8) {
       removeSkillLight()
       document.querySelector('.hard').classList.add('skillCheck')
+      dispatch(setDifficulty(6))
     } else if (settings.countValue >= 8 && settings.countValue < 10) {
       removeSkillLight()
       document.querySelector('.insaine').classList.add('skillCheck')
+      dispatch(setDifficulty(8))
     } else if (settings.countValue >= 10) {
       removeSkillLight()
       document.querySelector('.god').classList.add('skillCheck')
+      dispatch(setDifficulty(10))
+    }else if (settings.countValue === 0 && player.player === '') {
+      removeSkillLight()
     }
-  }, [settings, player])
+  }, [settings])
 
   function removeSkillLight() {
     let divs = document.querySelectorAll('.skillLight')
@@ -47,23 +54,23 @@ function SkillLevel() {
       </div>
       <div className='normal skillLight'>
         Normal <br />
-        +20
+        +2
       </div>
       <div className='notBad skillLight'>
         Not bad <br />
-        +40
+        +4
       </div>
       <div className='hard skillLight'>
         Hard <br />
-        +60
+        +6
       </div>
       <div className='insaine skillLight'>
         INSAINE!! <br />
-        +80
+        +8
       </div>
       <div className='god skillLight'>
         GOD!!! <br />
-        +100
+        +10
       </div>
     </div>
   )

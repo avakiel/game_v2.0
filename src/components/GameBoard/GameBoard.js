@@ -136,7 +136,7 @@ function GameBoard() {
       });
     setHideClass("");
     setFalseCounter(falseCounter + roundWrongTurns);
-    dispatch(playerScore(gameState.flashRandom.length - roundWrongTurns));
+    dispatch(playerScore(gameState.flashRandom.length - roundWrongTurns)*settings.difficulty);
   }
 
   
@@ -146,7 +146,7 @@ function GameBoard() {
       setTurnCount(turnCount + 1);
       signTurn(event, true);
       event.target.innerHTML++
-      setTimeout(()=>{
+     setTimeout(()=>{
         event.target.classList.remove('flashItemTrue')
       },1000)
     } else if (Number(event.target.id) !== gameState.flashRandom[turnCount]) {

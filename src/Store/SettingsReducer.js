@@ -6,6 +6,7 @@ export const settingsReducer = createSlice({
         speedValue: 0,
         countValue: 0,
         confirmSettings: false,
+        difficulty: 0
     },
     reducers: {
         setSettings: (state, data) => {
@@ -22,15 +23,19 @@ export const settingsReducer = createSlice({
         setConfirm: (state,data) => {
             state.confirmSettings = data.payload
         },
+        setDifficulty: (state, data) => {
+            state.difficulty = data.payload
+        },
         refreshSettings: (state) => {
             state.speedValue = 0
             state.countValue = 0
             state.confirmSettings = false
+            state.difficulty = 0
         }
     }
 })
 
-export const {setSettings, refreshSettings, setCount, setSpeed, setConfirm } = settingsReducer.actions
+export const {setSettings, refreshSettings, setCount, setSpeed, setConfirm, setDifficulty } = settingsReducer.actions
 
 export const selectSettings = state => state.settings
 export const selectSpeedValue = state => state.settings.speedValue
