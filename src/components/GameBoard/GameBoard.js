@@ -28,18 +28,22 @@ function GameBoard() {
   const [roundWrongTurns, setRoundWrongTurns] = useState(0);
   const [itemCounter, setItemCounter] = useState()
 
+  console.log(roundWrongTurns)
+  console.log(falseCounter)
+
   useEffect(() => {
     if (turnCount === gameState.flashRandom.length) {
       setTimeout(gameEnd, 1000);
       setImFlashed(false);
       setTurnCount(0);
+      setRoundWrongTurns(0)
     }
   }, [turnCount]);
 
   
 
   useEffect(() => {
-    if (falseCounter >= 3) {
+    if (falseCounter >= 5) {
       dispatch(playerScore(gameState.flashRandom.length - roundWrongTurns))
       dispatch(
         pushTablet({
