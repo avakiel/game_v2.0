@@ -127,6 +127,7 @@ function GameBoard() {
   }
 
   function gameEnd() {
+    let score = (gameState.flashRandom.length - roundWrongTurns)*settings.difficulty
     document
       .querySelectorAll(".flashItem")
       .forEach((item) =>{
@@ -135,7 +136,7 @@ function GameBoard() {
       });
     setHideClass("");
     setFalseCounter(falseCounter + roundWrongTurns);
-    dispatch(playerScore(gameState.flashRandom.length - roundWrongTurns)*settings.difficulty);///??????
+    dispatch(playerScore(score));
   }
 
   
