@@ -28,8 +28,6 @@ function GameBoard() {
   const [roundWrongTurns, setRoundWrongTurns] = useState(0);
   const [itemCounter, setItemCounter] = useState()
 
-  console.log(roundWrongTurns)
-  console.log(falseCounter)
 
   useEffect(() => {
     if (turnCount === gameState.flashRandom.length) {
