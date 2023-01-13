@@ -26,7 +26,6 @@ function GameBoard() {
   const [falseCounter, setFalseCounter] = useState(0);
   const [turnCount, setTurnCount] = useState(0);
   const [roundWrongTurns, setRoundWrongTurns] = useState(0);
-  const [itemCounter, setItemCounter] = useState()
 
 
   useEffect(() => {
@@ -136,7 +135,7 @@ function GameBoard() {
       });
     setHideClass("");
     setFalseCounter(falseCounter + roundWrongTurns);
-    dispatch(playerScore(gameState.flashRandom.length - roundWrongTurns)*settings.difficulty);
+    dispatch(playerScore(gameState.flashRandom.length - roundWrongTurns)*settings.difficulty);///??????
   }
 
   

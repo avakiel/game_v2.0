@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectPlayers } from '../../Store/PlayersReducer'
 import { selectSettings, setDifficulty } from '../../Store/SettingsReducer'
 
-function SkillLevel() {
+function SkillLevel(props) {
   let dispatch = useDispatch()
   let settings = useSelector(selectSettings)
   let player = useSelector(selectPlayers)
+  
 
   useEffect(() => {
+    let difficulty = 0
     if (settings.countValue === 0 && player.player !== '') {
       removeSkillLight()
     } else if (settings.countValue !== 0 && settings.countValue < 3) {
@@ -17,27 +19,32 @@ function SkillLevel() {
     } else if (settings.countValue >= 3 && settings.countValue < 5) {
       removeSkillLight()
       document.querySelector('.normal').classList.add('skillCheck')
-      dispatch(setDifficulty(2))
+      difficulty = 2
     } else if (settings.countValue >= 5 && settings.countValue < 6) {
       removeSkillLight()
       document.querySelector('.notBad').classList.add('skillCheck')
-      dispatch(setDifficulty(4))
+      difficulty = 4
     } else if (settings.countValue >= 6 && settings.countValue < 8) {
       removeSkillLight()
       document.querySelector('.hard').classList.add('skillCheck')
-      dispatch(setDifficulty(6))
+      difficulty = 6
     } else if (settings.countValue >= 8 && settings.countValue < 10) {
       removeSkillLight()
       document.querySelector('.insaine').classList.add('skillCheck')
-      dispatch(setDifficulty(8))
+      difficulty = 8
     } else if (settings.countValue >= 10) {
       removeSkillLight()
       document.querySelector('.god').classList.add('skillCheck')
-      dispatch(setDifficulty(10))
+      difficulty = 10
     }else if (settings.countValue === 0 && player.player === '') {
       removeSkillLight()
     }
-  }, [settings])
+
+    if (props.isReady) {
+      dispatch(setDifficulty(difficulty))
+      difficulty = 0
+    }
+  }, [settings, dispatch, player, props.isReady])
 
   function removeSkillLight() {
     let divs = document.querySelectorAll('.skillLight')
