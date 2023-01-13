@@ -146,20 +146,24 @@ function GameBoard() {
       setTurnCount(turnCount + 1);
       signTurn(event, true);
       event.target.innerHTML++
+      setTimeout(()=>{
+        event.target.classList.remove('flashItemTrue')
+      },1000)
     } else if (Number(event.target.id) !== gameState.flashRandom[turnCount]) {
       event.target.innerHTML++
       signTurn(event, false);
       setTurnCount(turnCount + 1);
       setRoundWrongTurns(roundWrongTurns + 1);
+      setTimeout(()=>{
+        event.target.classList.remove('flashItemFalse')
+      },1000)
     }
   }
 
   
 
   const signTurn = (event, isRight) => {
-    isRight
-      ? event.target.classList.add('flashItemTrue')
-      : event.target.classList.add('flashItemFalse');
+    isRight ? (event.target.classList.add('flashItemTrue')) : (event.target.classList.add('flashItemFalse'))
   };
 
   

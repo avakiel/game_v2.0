@@ -4,7 +4,7 @@ export const playersReducer = createSlice({
     name: 'players',
     initialState: {
         player: '',
-        score: '',
+        score: 0,
         confirmSettings: false
     },
     reducers: {
@@ -19,7 +19,7 @@ export const playersReducer = createSlice({
         refreshPlayer: (state) => {
             state.confirmSettings = false
             state.player = ''
-            state.score = ''
+            state.score = 0
         }
     }
 })
